@@ -48,13 +48,19 @@ class TrackerBalancedLoss:
         """
         loss = 0
         _metric_value_dict = {}
-        for key in self.loss_lkp.keys():
-            _loss = self.loss_lkp[key](pred[key], act[key])
-            _metric_value_dict[f"{key}_{self.name}_loss"] = {
-                "label":f"step_{self.__step}",
-                "value":_loss
-            }
-            loss += _loss
+        if "mu" in pred and "logvar" in pred:
+            kl = -0.5 * torch.sum(1 + pred["logvar"] - pred["mu"].pow(2) - pred["logvar"].exp())
+            recon = self.loss_lkp["images"](pred["images"], act["images"])
+            loss += kl
+            loss += recon
+        else:
+            for key in self.loss_lkp.keys():
+                _loss = self.loss_lkp[key](pred[key], act[key])
+                _metric_value_dict[f"{key}_{self.name}_loss"] = {
+                    "label":f"step_{self.__step}",
+                    "value":_loss
+                }
+                loss += _loss
         if self.mo is not None:
             self.mo.update_metrics(metric_value_dict=_metric_value_dict)
         out_loss = torch.mean(loss)
