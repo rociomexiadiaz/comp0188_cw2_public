@@ -49,7 +49,7 @@ class TrackerBalancedLoss:
         loss = 0
         _metric_value_dict = {}
         if "mu" in pred and "logvar" in pred:
-            kl = -0.5 * torch.sum(1 + pred["logvar"] - pred["mu"].pow(2) - pred["logvar"].exp())
+            kl = self.loss_lkp["kl"](pred["mu"], pred["logvar"])
             recon = self.loss_lkp["images"](pred["images"], act["images"])
             loss += kl
             loss += recon
