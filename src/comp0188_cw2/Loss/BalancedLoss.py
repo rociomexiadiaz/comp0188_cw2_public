@@ -56,7 +56,7 @@ class TrackerBalancedLoss:
             }
             loss += _loss
             if "kl" in pred.keys():
-                loss += pred["kl"]
+                loss += pred["kl"]/pred["images"].shape[0]
         if self.mo is not None:
             self.mo.update_metrics(metric_value_dict=_metric_value_dict)
         out_loss = torch.mean(loss)
