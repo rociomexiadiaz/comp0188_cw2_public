@@ -61,5 +61,4 @@ class TrackerBalancedLoss:
             self.mo.update_metrics(metric_value_dict=_metric_value_dict)
         out_loss = torch.mean(loss)
         self.__step += 1
-        print(loss)
         return out_loss
