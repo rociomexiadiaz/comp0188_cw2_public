@@ -50,6 +50,7 @@ class TrackerBalancedLoss:
         _metric_value_dict = {}
         for key in self.loss_lkp.keys():
             _loss = self.loss_lkp[key](pred[key], act[key])
+            print(_loss.shape)
             _metric_value_dict[f"{key}_{self.name}_loss"] = {
                 "label":f"step_{self.__step}",
                 "value":_loss
