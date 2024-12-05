@@ -50,7 +50,6 @@ class TrackerBalancedLoss:
         _metric_value_dict = {}
         for key in self.loss_lkp.keys():
             _loss = self.loss_lkp[key](pred[key], act[key])
-            print(_loss.shape)
             _metric_value_dict[f"{key}_{self.name}_loss"] = {
                 "label":f"step_{self.__step}",
                 "value":_loss
@@ -62,4 +61,5 @@ class TrackerBalancedLoss:
             self.mo.update_metrics(metric_value_dict=_metric_value_dict)
         out_loss = torch.mean(loss)
         self.__step += 1
+        print(loss)
         return out_loss
