@@ -57,7 +57,7 @@ class TrackerBalancedLoss:
             }
             loss += _loss
             if "kl" in pred.keys():
-                kl_weight = min(1.0, epoch / 25) if epoch >= 0 else 0.0
+                kl_weight = min(1.0, epoch / 10) if epoch >= 0 else 0.0
                 kl_loss = kl_weight*pred["kl"]/pred["images"].shape[0]
                 loss += kl_loss
                 _metric_value_dict[f"kl_{self.name}"] = {
