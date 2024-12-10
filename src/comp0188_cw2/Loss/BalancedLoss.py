@@ -60,7 +60,7 @@ class TrackerBalancedLoss:
                 loss += kl_loss
                 _metric_value_dict[f"kl_{self.name}"] = {
                     "label": f"step_{self.__step}",
-                    "value": kl_loss.item()
+                    "value": kl_loss.item()}
         if self.mo is not None:
             self.mo.update_metrics(metric_value_dict=_metric_value_dict)
         out_loss = torch.mean(loss)
