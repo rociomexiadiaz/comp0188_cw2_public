@@ -35,7 +35,8 @@ class TrainSingleEpoch:
         gpu:bool,
         optimizer:torch.optim.Optimizer,
         criterion:CriterionProtocol,
-        logger:logging.Logger
+        logger:logging.Logger,
+        epoch:int=0
         )->Tuple[torch.Tensor, Dict[str,torch.Tensor]]:
         """ Call function which runs a single epoch of training
         Args:
@@ -97,10 +98,10 @@ class TrainSingleEpoch:
             if self.half_precision:
                 with torch.autocast(device_type=_device):
                         output = model(**input_vals)
-                        train_loss = criterion(output, output_vals)
+                        train_loss = criterion(output, output_vals,epoch=epoch)
             else:
                 output = model(**input_vals)
-                train_loss = criterion(output, output_vals)
+                train_loss = criterion(output, output_vals,epoch=epoch)
             if self.cache_preds:
                 preds.append({k:output[k].detach().cpu() for k in output.keys()})
             losses += train_loss.detach().cpu()
