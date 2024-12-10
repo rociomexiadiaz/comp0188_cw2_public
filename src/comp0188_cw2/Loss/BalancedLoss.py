@@ -27,7 +27,8 @@ class TrackerBalancedLoss:
     def __call__(
         self, 
         pred:Dict[str, torch.Tensor],
-        act:Dict[str, torch.Tensor]
+        act:Dict[str, torch.Tensor],
+        epoch: int =0,
         ) -> torch.Tensor:
         """Evaluates the input values against the loss functions specified in
         the init.
