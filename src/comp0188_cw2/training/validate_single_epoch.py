@@ -31,7 +31,8 @@ class ValidateSingleEpoch:
         model:torch.nn.Module,
         data_loader:GenericDataLoaderProtocol,
         gpu:bool,
-        criterion:CriterionProtocol
+        criterion:CriterionProtocol,
+        epoch:int=0
         )->Tuple[torch.Tensor, Dict[str,torch.Tensor]]:
         """ Call function which runs a single epoch of validation
         Args:
@@ -90,7 +91,7 @@ class ValidateSingleEpoch:
                     output = model(**input_vals)
 
                 # Logs
-                val_loss = criterion(output, output_vals)
+                val_loss = criterion(output, output_vals,epoch=epoch)
                 losses += val_loss.detach().cpu()
                 denom += 1
                 if self.cache_preds:
