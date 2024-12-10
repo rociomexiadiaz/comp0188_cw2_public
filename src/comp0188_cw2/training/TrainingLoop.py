@@ -294,11 +294,11 @@ class TorchTrainingLoop:
         val_criterion = self.val_criterion,
         train_epoch_func = TrainSingleEpoch(
           half_precision=self.half_precision,
-          cache_preds=self.cache_preds, epoch=epoch
+          cache_preds=self.cache_preds
           ),
         val_epoch_func = ValidateSingleEpoch(
           half_precision=self.half_precision,
-          cache_preds=self.cache_preds, epoch=epoch
+          cache_preds=self.cache_preds
           ),
         preds_save_type = self.preds_save_type,
         output_dir=self.output_dir
