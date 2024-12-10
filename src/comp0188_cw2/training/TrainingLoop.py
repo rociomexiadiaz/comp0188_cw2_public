@@ -106,14 +106,14 @@ def train(
         logger.info("Running training epoch")
         train_loss_val, train_preds =  train_epoch_func(
             model=model, data_loader=train_data_loader, gpu=gpu,
-            optimizer=optimizer, criterion=criterion,logger=logger)
+            optimizer=optimizer, criterion=criterion,logger=logger, epoch=epoch)
         epoch_train_loss = train_loss_val.numpy()
 
         logger.info("epoch {}\t training loss : {}".format(
                 epoch, epoch_train_loss))
         val_loss_val, val_preds = val_epoch_func(
             model=model, data_loader=val_data_loader, gpu=gpu,
-            criterion=val_criterion)
+            criterion=val_criterion,epoch=epoch)
 
         epoch_val_loss = val_loss_val.numpy()
         logger.info("Running validation")
@@ -294,11 +294,11 @@ class TorchTrainingLoop:
         val_criterion = self.val_criterion,
         train_epoch_func = TrainSingleEpoch(
           half_precision=self.half_precision,
-          cache_preds=self.cache_preds
+          cache_preds=self.cache_preds, epoch=epoch
           ),
         val_epoch_func = ValidateSingleEpoch(
           half_precision=self.half_precision,
-          cache_preds=self.cache_preds
+          cache_preds=self.cache_preds, epoch=epoch
           ),
         preds_save_type = self.preds_save_type,
         output_dir=self.output_dir
