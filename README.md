@@ -1,2 +1,2 @@
-# Robotci Behavioural Cloning
+# Robotic Behavioural Cloning
 Work in Progress!
